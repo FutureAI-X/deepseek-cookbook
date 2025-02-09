@@ -1,2 +1,5 @@
 # 安装 OpenAI SDK
-pip3 install openai
+pip install openai
+
+# 安装 Jupyter
+pip install jupyterlab
