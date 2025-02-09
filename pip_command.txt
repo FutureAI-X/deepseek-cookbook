@@ -9,3 +9,6 @@ pip install transformers
 
 # 安装 Streamlit
 pip install streamlit
+
+# 安装 LangChain OpenAI 包
+pip install langchain-openai
