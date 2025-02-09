@@ -1,0 +1,2 @@
+# 安装 OpenAI SDK
+pip3 install openai
