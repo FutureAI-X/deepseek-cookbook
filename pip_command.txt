@@ -6,3 +6,6 @@ pip install jupyterlab
 
 # 安装 Hugging Face Transformers 库
 pip install transformers
+
+# 安装 Streamlit
+pip install streamlit

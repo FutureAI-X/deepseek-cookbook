@@ -18,3 +18,9 @@ DeepSeek 学习代码
 ```commandline
 jupyter lab
 ```
+
+## 四 Streamlit 使用
+运行 streamlit 应用命令
+```commandline
+streamlit run streamlit_app.py
+```
