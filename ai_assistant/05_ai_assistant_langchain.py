@@ -1,26 +1,18 @@
 import streamlit as st
-from openai import OpenAI
+from langchain_openai import ChatOpenAI
 
-client = OpenAI(api_key="sk-mriefpscmvqlyjfhwvtrryjubgvthnvccnwgsqriiagsqgvm", base_url="https://api.siliconflow.cn/v1")
+llm = ChatOpenAI(
+    base_url="https://api.deepseek.com",
+    api_key="<API Key>",
+    model_name="deepseek-chat",
+    temperature=0
+)
+
 def generate_response(messages):
-    response = client.chat.completions.create(
-        model="deepseek-ai/DeepSeek-R1",
-        messages=messages,
-        stream=True
-    )
+    response = llm.stream(messages)
+    return response
 
-    already_content_begin = False
-
-    for chunk in response:
-        delta = chunk.choices[0].delta
-        if delta.reasoning_content:
-            delta.content = delta.reasoning_content
-        elif already_content_begin is False and delta.content:
-            already_content_begin = True
-            delta.content = "\n\n================ **Answer:** ================\n\n" + delta.content
-        yield chunk
-
-st.title("AI 助手 (Reason) 😊")
+st.title("AI 助手 (LangChain) 😊")
 
 # 初始化消息列表
 if "messages" not in st.session_state:

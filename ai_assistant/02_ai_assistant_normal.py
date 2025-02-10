@@ -12,7 +12,7 @@ def generate_response(messages):
     )
     return response.choices[0].message.content
 
-st.title("AI 助手 (Mirror) 😊")
+st.title("AI 助手 (DeepSeek) 😊")
 
 # 初始化消息列表
 if "messages" not in st.session_state:
