@@ -11,13 +11,11 @@ DeepSeek 学习代码
 ### 1.2 pip 命令清单
 也提供了 pip 命令清单，用于安装依赖包。详见项目根路径下的 pip_command.txt
 
-## 三 Jupyter 使用
-使用 Jupyter Lab 方便调试，节省 API 调用费用
-
-启动 Jupyter Lab
-```commandline
-jupyter lab
-```
+## 三 包结构说明
+- ai_assistant：AI助手各种对接方式代码
+- python_demo：开发实践模块涉及的代码
+- token_count：计算 DeepSeek Token 代码
+- translate.txt：测试 沉浸式翻译 的英文
 
 ## 四 Streamlit 使用
 运行 streamlit 应用命令

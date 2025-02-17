@@ -1,7 +1,8 @@
 import streamlit as st
 from openai import OpenAI
 
-client = OpenAI(api_key="sk-caa51fb1e83942b7a48076fabac307ab", base_url="https://api.deepseek.com")
+client = OpenAI(api_key="<API Key>", base_url="https://api.deepseek.com")
+
 def generate_response(messages):
     response = client.chat.completions.create(
         model="deepseek-chat",
@@ -11,6 +12,7 @@ def generate_response(messages):
         stream=False
     )
     return response.choices[0].message.content
+
 
 st.title("AI 助手 (DeepSeek) 😊")
 
@@ -23,8 +25,8 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# 1.获取用户输入，并添加到消息列表中 2.复制用户输入作为助手回复
 prompt = st.chat_input("请输入内容")
+
 if prompt:
     # 打印用户输入
     with st.chat_message("user"):

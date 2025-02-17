@@ -1,17 +1,16 @@
 from openai import OpenAI
 
-client = OpenAI(api_key="<API Key>", base_url="https://api.deepseek.com")
+client = OpenAI(api_key="<API Key>", base_url="https://api.siliconflow.cn/v1")
 
-messages = [{"role": "user", "content": "9.11和9.8哪个大"}]
+messages = [{"role": "user", "content": "你好"}]
 
 response = client.chat.completions.create(
-    model="deepseek-reasoner",
+    model="deepseek-ai/DeepSeek-R1",
     messages=messages,
     stream=True
 )
 
 done_reasoning = False
-
 for chunk in response:
     reasoning_chunk = chunk.choices[0].delta.reasoning_content
     answer_chunk = chunk.choices[0].delta.content

@@ -1,20 +1,21 @@
 import streamlit as st
 from openai import OpenAI
 
-client = OpenAI(api_key="<API Key>", base_url="https://api.deepseek.com")
+client = OpenAI(
+    base_url='http://127.0.0.1:1234/v1',
+    api_key='lmstudio'
+)
 
 def generate_response(messages):
     response = client.chat.completions.create(
-        model="deepseek-chat",
+        model="deepseek-r1-distill-qwen-7b",
         messages=messages,
-        max_tokens=1024,
-        temperature=0.7,
         stream=True
     )
     return response
 
 
-st.title("AI 助手 (DeepSeek Stream) 😊")
+st.title("AI 助手 (LMStudio) 😊")
 
 # 初始化消息列表
 if "messages" not in st.session_state:

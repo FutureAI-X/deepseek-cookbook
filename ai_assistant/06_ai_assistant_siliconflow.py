@@ -1,20 +1,28 @@
 import streamlit as st
 from openai import OpenAI
 
-client = OpenAI(api_key="<API Key>", base_url="https://api.deepseek.com")
+client = OpenAI(api_key="<API Key>", base_url="https://api.siliconflow.cn/v1")
 
 def generate_response(messages):
     response = client.chat.completions.create(
-        model="deepseek-chat",
+        model="deepseek-ai/DeepSeek-R1",
         messages=messages,
-        max_tokens=1024,
-        temperature=0.7,
         stream=True
     )
-    return response
+
+    done_reasoning = False
+
+    for chunk in response:
+        delta = chunk.choices[0].delta
+        if delta.reasoning_content:
+            delta.content = delta.reasoning_content
+        elif done_reasoning is False and delta.content:
+            done_reasoning = True
+            delta.content = "\n\n=== Final Answer ===\n\n" + delta.content
+        yield chunk
 
 
-st.title("AI 助手 (DeepSeek Stream) 😊")
+st.title("AI 助手 (siliconflow 推理API版) 😊")
 
 # 初始化消息列表
 if "messages" not in st.session_state:

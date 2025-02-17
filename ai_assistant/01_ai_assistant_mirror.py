@@ -11,8 +11,8 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# 1.获取用户输入，并添加到消息列表中 2.复制用户输入作为助手回复
 prompt = st.chat_input("请输入内容")
+
 if prompt:
     # 打印用户输入
     with st.chat_message("user"):

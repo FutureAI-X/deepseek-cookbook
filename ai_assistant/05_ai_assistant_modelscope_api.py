@@ -1,18 +1,28 @@
 import streamlit as st
-from langchain_openai import ChatOpenAI
+from openai import OpenAI
 
-llm = ChatOpenAI(
-    base_url="https://api.deepseek.com",
-    api_key="<API Key>",
-    model_name="deepseek-chat",
-    temperature=0
-)
+client = OpenAI(api_key="<API Key>", base_url="https://api-inference.modelscope.cn/v1/")
 
 def generate_response(messages):
-    response = llm.stream(messages)
-    return response
+    response = client.chat.completions.create(
+        model="deepseek-ai/DeepSeek-R1",
+        messages=messages,
+        stream=True
+    )
 
-st.title("AI 助手 (LangChain) 😊")
+    done_reasoning = False
+
+    for chunk in response:
+        delta = chunk.choices[0].delta
+        if delta.reasoning_content:
+            delta.content = delta.reasoning_content
+        elif done_reasoning is False and delta.content:
+            done_reasoning = True
+            delta.content = "\n\n=== Final Answer ===\n\n" + delta.content
+        yield chunk
+
+
+st.title("AI 助手 (ModelScope 推理API版) 😊")
 
 # 初始化消息列表
 if "messages" not in st.session_state:
@@ -23,8 +33,8 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# 1.获取用户输入，并添加到消息列表中 2.复制用户输入作为助手回复
 prompt = st.chat_input("请输入内容")
+
 if prompt:
     # 打印用户输入
     with st.chat_message("user"):

@@ -1,9 +1,6 @@
 # 安装 OpenAI SDK
 pip install openai
 
-# 安装 Jupyter
-pip install jupyterlab
-
 # 安装 Hugging Face Transformers 库
 pip install transformers
 

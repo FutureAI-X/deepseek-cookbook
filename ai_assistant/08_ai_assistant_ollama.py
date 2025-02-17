@@ -1,26 +1,18 @@
 import streamlit as st
 from openai import OpenAI
 
-client = OpenAI(api_key="sk-mriefpscmvqlyjfhwvtrryjubgvthnvccnwgsqriiagsqgvm", base_url="https://api.siliconflow.cn/v1")
+client = OpenAI(api_key="ollama", base_url="http://localhost:11434/v1/")
+
 def generate_response(messages):
     response = client.chat.completions.create(
-        model="deepseek-ai/DeepSeek-R1",
+        model="modelscope.cn/unsloth/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q4_K_M",
         messages=messages,
         stream=True
     )
+    return response
 
-    already_content_begin = False
 
-    for chunk in response:
-        delta = chunk.choices[0].delta
-        if delta.reasoning_content:
-            delta.content = delta.reasoning_content
-        elif already_content_begin is False and delta.content:
-            already_content_begin = True
-            delta.content = "\n\n================ **Answer:** ================\n\n" + delta.content
-        yield chunk
-
-st.title("AI 助手 (Reason) 😊")
+st.title("AI 助手 (Ollama) 😊")
 
 # 初始化消息列表
 if "messages" not in st.session_state:
@@ -31,8 +23,8 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# 1.获取用户输入，并添加到消息列表中 2.复制用户输入作为助手回复
 prompt = st.chat_input("请输入内容")
+
 if prompt:
     # 打印用户输入
     with st.chat_message("user"):
